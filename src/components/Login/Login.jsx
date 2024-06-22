@@ -1,18 +1,20 @@
 import './Login.css';
-import Home from "../Home/Home.jsx";
-import {useState} from "react";
-import {useTranslation} from "react-i18next";
+import { useState } from "react";
+import { useTranslation } from "react-i18next";
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
-
     const [password, setPassword] = useState('');
     const [username, setUsername] = useState('');
     const [loginSuccessful, setLoginSuccessful] = useState(false);
-    const[t, i18n] = useTranslation("global");
+    const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
+    const { t, i18n } = useTranslation("global");
+    const navigate = useNavigate();
 
-
-    const handdleLogin = (e) =>{
+    const handleLogin = (e) => {
         e.preventDefault();
+        setLoading(true);
         const data = {
             username: username,
             password: password
@@ -24,56 +26,91 @@ const Login = () => {
             },
             body: JSON.stringify(data)
         })
-            .then(response=> response.json())
-            .then(result => {
-                console.log(result.token)
-                if(result.token){
-                    localStorage.setItem('token', result.token)
-                    setLoginSuccessful(true);
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(result => {
+            setLoading(false);
+            if (result.token) {
+                localStorage.setItem('token', result.token);
+                if (result.rol) {
+                    localStorage.setItem('userRole', result.rol); // Almacenamos el rol en localStorage
+                    console.log('User role:', result.rol); // Imprime el rol del usuario
                 } else {
-                    setLoginSuccessful(false);
+                    console.log('No role found in API response');
                 }
-            })
-            .catch(error =>{
-                console.log(error)
-            })
-    }
+                setLoginSuccessful(true);
+                handleRedirect(result.rol); // Redirige según el rol del usuario
+            } else {
+                setLoginSuccessful(false);
+                setError('Login failed. Please check your credentials.');
+            }
+        })
+        .catch(error => {
+            setLoading(false);
+            console.error('Error:', error);
+            setError('Something went wrong. Please try again later.');
+        });
+    };
+
+    const handleRedirect = (role) => {
+        switch (role) {
+            case 'admin':
+                navigate('/home');
+                break;
+            case 'conserje':
+                navigate('/home');
+                break;
+            case 'user':
+                navigate('/homeuser');
+                break;
+            default:
+                navigate('/'); 
+                break;
+        }
+    };
 
     return (
         <>
-          {loginSuccessful ? (
-            <Home />
-          ) : (
-            <div className="custom-form">
-              <form>
-                <label className="custom-label">{t("label.Username")}</label>
-                <input
-                  onChange={(event) => setUsername(event.target.value)}
-                  placeholder="username"
-                  className="custom-input"
-                  type="text"
-                />
-                <label className="custom-label">{t("label.Password")}</label>
-                <input
-                  onChange={(event) => setPassword(event.target.value)}
-                  placeholder="password"
-                  className="custom-input"
-                  type="password"
-                />
-                <div className="login-button">
-                    <button className="custom-button" onClick={handdleLogin}>{t("label.Login")}</button>
+            {loginSuccessful ? (
+                <p>Loading...</p> // Muestra un mensaje de carga opcional mientras se redirige
+            ) : (
+                <div className="custom-form">
+                    <form onSubmit={handleLogin}>
+                        <label className="custom-label">{t("label.Username")}</label>
+                        <input
+                            onChange={(event) => setUsername(event.target.value)}
+                            placeholder="username"
+                            className="custom-input"
+                            type="text"
+                            required
+                        />
+                        <label className="custom-label">{t("label.Password")}</label>
+                        <input
+                            onChange={(event) => setPassword(event.target.value)}
+                            placeholder="password"
+                            className="custom-input"
+                            type="password"
+                            required
+                        />
+                        <div className="login-button">
+                            <button className="custom-button" type="submit" disabled={loading}>
+                                {loading ? 'Logging in...' : t("label.Login")}
+                            </button>
+                        </div>
+                        {error && <p className="error-message">{error}</p>}
+                        <div className="buttons-container">
+                            <button onClick={(event) => { event.preventDefault(); i18n.changeLanguage("es") }}>ES</button>
+                            <button onClick={(event) => { event.preventDefault(); i18n.changeLanguage("en") }}>EN</button>
+                        </div>
+                    </form>
                 </div>
-                <div className="buttons-container">
-                    <button onClick={(event) => { event.preventDefault(); i18n.changeLanguage("es") }}>ES</button>
-                    <button onClick={(event) => { event.preventDefault(); i18n.changeLanguage("en") }}>EN</button>
-                </div>
-              </form>
-            </div>
-          )}
+            )}
         </>
-      );
+    );
 }
 
 export default Login;
-
-
