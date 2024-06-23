@@ -5,16 +5,14 @@ import ParkingStatus from '../../components/ParkingStatus/ParkingStatus.jsx';
 import './Vehiculos.css'; 
 import QRCode from 'qrcode.react';
 
-
 function Vehiculos() {
   const [message, setMessage] = useState('');
   const [freeSpots, setFreeSpots] = useState([]);
-  const [tiempoEstancia, setTiempoEstancia] = useState(0); // Tiempo de estancia en minutos
-  const [tiempoAdvertencia, setTiempoAdvertencia] = useState(0); // Tiempo de advertencia en minutos
+  const [tiempoEstancia, setTiempoEstancia] = useState(0);
+  const [tiempoAdvertencia, setTiempoAdvertencia] = useState(0);
   const [whatsappURL, setWhatsappURL] = useState('');
   const [departmentNumber, setDepartmentNumber] = useState('');
-
-
+  const [showQR, setShowQR] = useState(false); // Estado para mostrar o no el QR y el mensaje
 
   const labels = {
     formTitle: 'Registro de Vehículos',
@@ -65,20 +63,16 @@ function Vehiculos() {
       const data = await response.json();
       setDepartmentNumber(data.numero);
   
-      // Construir la URL de WhatsApp y actualizar whatsappURL
       const encodedMessage = encodeURIComponent(message);
       const url = `https://api.whatsapp.com/send?phone=${data.numero}&text=${encodedMessage}`;
       console.log('URL de WhatsApp:', url);
-      setWhatsappURL(url); // Actualizar whatsappURL con la URL construida
-  
-      // Mostrar mensaje después de actualizar whatsappURL si es necesario
+      setWhatsappURL(url);
       setMessage(message);
+      setShowQR(true); // Mostrar el QR y el mensaje cuando se tiene el URL de WhatsApp
     } catch (error) {
       console.error('Error fetching department number:', error);
     }
   };
-  
-
 
   const handleEntryCreated = async (formData) => {
     try {
@@ -86,12 +80,11 @@ function Vehiculos() {
         setMessage('No hay lugares de estacionamiento disponibles.');
         return;
       }
-      // Calcula la hora de advertencia
-      const horaIngreso = new Date(formData.horario);
-      const horaAdvertencia = new Date(horaIngreso.getTime() + (tiempoEstancia - tiempoAdvertencia) * 60000); // Convertir minutos a milisegundos
 
-      // Temporizador para mostrar el mensaje de advertencia
-      const tiempoRestante = tiempoAdvertencia * 60000; // Convertir minutos a milisegundos
+      const horaIngreso = new Date(formData.horario);
+      const horaAdvertencia = new Date(horaIngreso.getTime() + (tiempoEstancia - tiempoAdvertencia) * 60000);
+
+      const tiempoRestante = tiempoAdvertencia * 60000;
       console.log('dept:', formData.dept);
       console.log('el log:',  formData.dept, `El vehículo ${formData.nombre} de patente ${formData.referencia} le queda ${tiempoAdvertencia} minutos antes que se acabe su tiempo.`);
       setTimeout(() => {
@@ -124,7 +117,7 @@ function Vehiculos() {
       }
 
       setMessage(`Se ingresó el vehículo ${formData.nombre} con patente ${formData.referencia} en el estacionamiento ${selectedSpot.id}.`);
-      fetchFreeSpots(); // Actualizar la lista de estacionamientos libres
+      fetchFreeSpots(); 
     } catch (error) {
       console.error('Error creando vehículo:', error);
       setMessage(`Error al registrar el vehículo: ${error.message}`);
@@ -155,7 +148,7 @@ function Vehiculos() {
       }
 
       setMessage(`Estacionamiento ${id} liberado exitosamente.`);
-      fetchFreeSpots(); // Actualizar la lista de estacionamientos libres
+      fetchFreeSpots(); 
     } catch (error) {
       console.error('Error liberando estacionamiento:', error);
       setMessage(`Error al liberar el estacionamiento: ${error.message}`);
@@ -166,18 +159,20 @@ function Vehiculos() {
     <div>
       <Navbar />
       <div className='vehiculos-form-container'>
-        <h1>Registro de Vehículos</h1>
+        <h1 style={{ color: 'white' }}>Registro de Vehículos</h1>
         <EntryForm onEntryCreated={handleEntryCreated} labels={labels} defaultTipo="Vehiculo" />
         <div className='graphics-container'>
-            <ParkingStatus freeSpots={freeSpots} onFreeSpot={handleFreeSpot} /> {/* Pasar la lista de estacionamientos libres y la función para liberar */}
+            <ParkingStatus freeSpots={freeSpots} onFreeSpot={handleFreeSpot} /> 
         </div>
         {message && <p className="mensaje">{message}</p>}
-        <div className="qr-code">
-          <center>
-            <h2>Scan this QR Code to send the message via WhatsApp</h2>
-            <QRCode value={whatsappURL} />
-          </center>
-        </div>
+        {showQR && (
+          <div className="qr-code">
+            <center>
+              <h2 style={{ color: 'white' }}>Scan this QR Code to send the message via WhatsApp</h2>
+              <QRCode value={whatsappURL} />
+            </center>
+          </div>
+        )}
       </div>        
     </div>
   );

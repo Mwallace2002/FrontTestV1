@@ -1,6 +1,6 @@
 .entry-form {
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
+    background-color: #d4a682;
+    border: 1px solid #d4a682;
     padding: 20px;
     margin-top: 20px;
 }
@@ -19,7 +19,7 @@
 
 .entry-form button {
     padding: 10px 20px;
-    background-color: #007bff;
+    background-color: #ff8c00; /* Color principal del logo */
     color: white;
     border: none;
     cursor: pointer;

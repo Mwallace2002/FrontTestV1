@@ -9,7 +9,7 @@
 
 .custom-button1 {
     padding: 10px 20px;
-    background-color: #3300ff;
+    background-color: #ff8c00; /* Color principal del logo */
     color: white;
     border: none;
     border-radius: 4px;
@@ -17,11 +17,11 @@
 }
 
 .custom-button1:hover {
-    background-color: #2957ff;
+    background-color: #e07b00; /* Color de fondo del botón al pasar el ratón actualizado */
 }
 
 .custom-button1:active {
-    background-color: #2957ff;
+    background-color: #e07b00; /* Color de fondo del botón al hacer clic actualizado */
 }
 
 .custom-button1:focus {
@@ -35,7 +35,6 @@
     margin-bottom: 10px; 
 }
 
-/* Home.css */
 .home-container {
     max-width: 800px;
     margin: 0 auto;
@@ -44,6 +43,8 @@
 
 .entries-list {
     margin-bottom: 20px;
+    margin-top: 10px;
+    background-color: #d4a682; 
 }
 
 .entries-list table {
@@ -52,14 +53,14 @@
 }
 
 .entries-list th, .entries-list td {
-    border: 1px solid #ddd;
+    border: 1px solid #ddd; /* Color del borde actualizado */
     padding: 8px;
     text-align: left;
 }
 
 .entry-form {
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
+    background-color: #d4a682; /* Color de fondo actualizado */
+    border: 1px solid #ddd; /* Color del borde actualizado */
     padding: 20px;
     margin-top: 20px;
 }
@@ -78,7 +79,7 @@
 
 .entry-form button {
     padding: 10px 20px;
-    background-color: #007bff;
+    background-color: #ff8c00; /* Color principal del logo */
     color: white;
     border: none;
     cursor: pointer;

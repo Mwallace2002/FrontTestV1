@@ -16,21 +16,21 @@
 .vehiculos-form select {
   margin-bottom: 10px;
   padding: 8px;
-  border: 1px solid #ccc;
+  border: 1px solid #d4a682; /* Color del borde actualizado */
   border-radius: 5px;
 }
 
 .vehiculos-form button {
   padding: 10px 20px;
-  background-color: #007bff;
-  color: #fff;
+  background-color: #ff8c00; /* Color principal del logo */
+  color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
 }
 
 .vehiculos-form button:hover {
-  background-color: #0056b3;
+  background-color: #e07b00; /* Color de fondo del botón al pasar el ratón actualizado */
 }
 
 .mensaje {
@@ -41,6 +41,7 @@
   border-radius: 5px;
   text-align: center;
 }
+
 .graphics-container {
   display: flex;
   justify-content: center;

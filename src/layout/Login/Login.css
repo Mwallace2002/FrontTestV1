@@ -1,3 +1,21 @@
+.condominium-header {
+    text-align: center;
+    margin-bottom: 20px; /* Espacio entre el encabezado y el formulario */
+}
+
+.condominium-title {
+    color: white;
+    font-size: 24px; /* Tamaño del título */
+    font-weight: bold; /* Negrita */
+    margin-bottom: 10px; /* Espacio debajo del título */
+}
+
+.condominium-logo {
+    width: 25%; /* Ajusta el tamaño de la imagen según sea necesario */
+    height: auto; /* Mantiene la proporción */
+    border-radius: 50%; /* Borde redondeado para la imagen */
+}
+
 .custom-form {
     display: flex;
     flex-direction: column;
@@ -7,11 +25,11 @@
     width: 300px;
 }
 
-    @media screen and (max-width: 300px) {
-        .custom-form{
-            display: inline-block;
-        }
+@media screen and (max-width: 300px) {
+    .custom-form {
+        display: inline-block;
     }
+}
 
 .custom-label {
     margin-bottom: 10px;
@@ -20,14 +38,14 @@
 .custom-input {
     padding: 8px;
     margin-bottom: 15px;
-    border: 1px solid #ccc;
+    border: 1px solid #d4a682; /* Color del borde actualizado */
     border-radius: 4px;
     width: 100%;
 }
 
 .custom-button {
     padding: 10px 20px;
-    background-color: #4caf50;
+    background-color: #ff8c00; /* Color principal del logo */
     color: white;
     border: none;
     border-radius: 4px;
@@ -35,11 +53,11 @@
 }
 
 .custom-button:hover {
-    background-color: #45a049;
+    background-color: #e07b00; /* Color de fondo del botón al pasar el ratón actualizado */
 }
 
 .custom-button:active {
-    background-color: #3e8e41;
+    background-color: #e07b00; /* Color de fondo del botón al hacer clic actualizado */
 }
 
 .custom-button:focus {

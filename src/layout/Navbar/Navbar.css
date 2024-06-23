@@ -8,9 +8,9 @@ body, ul {
 
 /* Sidebar styling */
 .sidebar {
-  width: 175px; /* Adjust as needed */
+  width: 175px; 
   height: 100%;
-  background-color: #007bff; /* Blue color */
+  background-color: #49c0b6; 
   position: fixed;
   top: 0;
   left: 0;
@@ -28,7 +28,7 @@ body, ul {
 .sidebar-item {
   color: white;
   font-weight: bold;
-  font-family: 'Arial', sans-serif; /* Professional font */
+  font-family: 'Arial', sans-serif; 
   align-items: center;
 }
 
@@ -42,11 +42,11 @@ body, ul {
 }
 
 .sidebar-item a:hover {
-  background-color: #0056b3; /* Darker blue on hover */
+  background-color: #e07b00; 
 }
 
 .language-button {
-  background-color: transparent; /* Transparent background */
+  background-color: transparent;
   border: none;
   cursor: pointer;
   display: flex;
@@ -66,7 +66,79 @@ body, ul {
 
 /* Ensure nothing is hidden beneath the sidebar */
 .content {
-  margin-left: 250px; /* Adjust this value based on the sidebar width */
+  margin-left: 175px; /* Adjust this value based on the sidebar width */
+  transition: margin-left 0.5s;
+}
+
+/* Navbar.css */
+
+/* Reset some basic elements */
+body, ul {
+  margin: 0;
+  padding: 0;
+}
+
+/* Sidebar styling */
+.sidebar {
+  width: 175px; 
+  height: 100%;
+  background-color: #49c0b6; 
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  overflow-x: hidden;
+  padding-top: 20px;
+  transition: 0.5s;
+}
+
+.sidebar-menu {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar-item {
+  color: white;
+  font-weight: bold;
+  font-family: 'Arial', sans-serif; 
+  align-items: center;
+}
+
+.sidebar-item a {
+  color: white;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  transition: 0.3s;
+}
+
+.sidebar-item a:hover {
+  background-color: #e07b00; 
+}
+
+.language-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center; /* Align items vertically */
+}
+
+.language-button.selected {
+  border: 2px solid white; /* Highlight selected button */
+  border-radius: 5px; /* Rounded borders */
+}
+
+.language-icon {
+  width: 30px; /* Adjust icon size */
+  height: auto; /* Maintain aspect ratio */
+  margin-right: 5px; /* Adjust spacing between icon and button edge */
+}
+
+/* Ensure nothing is hidden beneath the sidebar */
+.content {
+  margin-left: 175px; /* Adjust this value based on the sidebar width */
   transition: margin-left 0.5s;
 }
 
@@ -91,7 +163,7 @@ body, ul {
 
 /* Collapse button styling */
 .collapse-button {
-  background-color: #0056b3; /* Darker blue for the button */
+  background-color: #e07b00; /* Color del logo al pasar el ratón */
   border: none;
   color: white;
   cursor: pointer;
@@ -106,5 +178,5 @@ body, ul {
 }
 
 .collapse-button:hover {
-  background-color: #003f7f; /* Even darker blue on hover */
+  background-color: #b35f00; /* Color más oscuro al pasar el ratón */
 }

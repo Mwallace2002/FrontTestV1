@@ -9,6 +9,8 @@ import Visitas from '../Visitas/Visitas.jsx';
 import Admin from '../Admin/Admin.jsx';
 import PrivateRoute from '../PrivateRoute/PrivateRoute.jsx';
 
+import './Main.css';
+
 const Main = () => {
   return (
     <Router>
