@@ -3,6 +3,8 @@ import EntryForm from '../../components/EntryForm/EntryForm.jsx';
 import Navbar from '../Navbar/Navbar.jsx';
 import ParkingStatus from '../../components/ParkingStatus/ParkingStatus.jsx'; 
 import './Vehiculos.css'; 
+import QRCode from 'qrcode.react';
+
 
 function Vehiculos() {
   const [message, setMessage] = useState('');
@@ -10,12 +12,11 @@ function Vehiculos() {
   const [tiempoEstancia, setTiempoEstancia] = useState(0); // Tiempo de estancia en minutos
   const [tiempoAdvertencia, setTiempoAdvertencia] = useState(0); // Tiempo de advertencia en minutos
 
-
   const labels = {
     formTitle: 'Registro de Vehículos',
     namePlaceholder: 'Vehículo',
     referencePlaceholder: 'Patente',
-    departmentPlaceholder: 'Seleccionar Estacionamiento',
+    departmentPlaceholder: 'Seleccionar Departamento',
     submitButton: 'Registrar'
   };
 
@@ -33,6 +34,7 @@ function Vehiculos() {
   };
 
   useEffect(() => {
+    fetchFreeSpots();
     const fetchParameters = async () => {
       try {
         const response = await fetch('https://apivercel-mwallace2002-max-wallaces-projects.vercel.app/api/parametros');
@@ -136,8 +138,10 @@ function Vehiculos() {
         <h1>Registro de Vehículos</h1>
         <EntryForm onEntryCreated={handleEntryCreated} labels={labels} defaultTipo="Vehiculo" />
         {message && <p className="mensaje">{message}</p>}
-        <ParkingStatus freeSpots={freeSpots} onFreeSpot={handleFreeSpot} /> {/* Pasar la lista de estacionamientos libres y la función para liberar */}
-      </div>
+        <div className='graphics-container'>
+            <ParkingStatus freeSpots={freeSpots} onFreeSpot={handleFreeSpot} /> {/* Pasar la lista de estacionamientos libres y la función para liberar */}
+        </div>
+      </div>        
     </div>
   );
 }
