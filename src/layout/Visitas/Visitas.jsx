@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Navbar from '../Navbar/Navbar.jsx';
 import './Visitas.css';
-import VisitaFrecuenteForm from '../../components/visitaFrecuenteForm.jsx'; 
+import VisitaFrecuenteForm from '../../components/VisitaFrecuenteForm/visitaFrecuenteForm.jsx'; 
 
 const departments = [
   'Ventas',

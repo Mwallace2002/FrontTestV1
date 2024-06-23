@@ -1,92 +1,80 @@
-import React, { useState, useEffect } from 'react';
+// DeliveryForm.jsx
+import React, { useState } from 'react';
 import Navbar from '../Navbar/Navbar.jsx';
 import QRCode from 'qrcode.react';
 import './Delivery.css';
+import EntryForm from '../../components/entryForm/EntryForm.jsx';
 
 function DeliveryForm() {
-  const [selectedDepartment, setSelectedDepartment] = useState('');
-  const [whatsappURL, setWhatsappURL] = useState('');
-  const [messageSent, setMessageSent] = useState(false);
-  const [departmentNumber, setDepartmentNumber] = useState('');
+    const [whatsappURL, setWhatsappURL] = useState('');
+    const [messageSent, setMessageSent] = useState(false);
+    const [departmentNumber, setDepartmentNumber] = useState('');
+    const [message, setMessage] = useState('');
 
-  const departments = [
-    { name: 'Ventas', id: 'ventas' },
-    { name: 'Marketing', id: 'marketing' },
-    { name: 'Desarrollo', id: 'desarrollo' },
-    { name: 'Recursos humanos', id: 'recursos-humanos' }
-  ];
+    const labels = {
+        formTitle: 'Registrar Delivery',
+        namePlaceholder: 'Nombre Recipiente',
+        referencePlaceholder: 'ID del paquete',
+        departmentPlaceholder: 'Seleccione un departamento',
+        submitButton: 'Registrar'
+    };
 
-  useEffect(() => {
-    if (selectedDepartment) {
-      fetchDepartmentNumber(selectedDepartment);
-    }
-  }, [selectedDepartment]);
+    const handleEntryCreated = (formData) => {
+        console.log('Nuevo paquete registrado:', formData);
+        console.log('ID del paquete:', formData.referencia);
+        console.log('Hora de llegada:', formData.horario);
+        console.log('Destinatario:', formData.nombre);
+        console.log('Departamento:', formData.dept);
 
-  const fetchDepartmentNumber = async (department) => {
-    try {
-      const response = await fetch(`https://apivercel-mwallace2002-max-wallaces-projects.vercel.app/api/department/${department}`);
-      if (!response.ok) {
-        throw new Error('Error al obtener el número de WhatsApp');
-      }
-      const data = await response.json();
-      setDepartmentNumber(data.numero);  // Cambiar de `data.whatsappNumber` a `data.numero`
-    } catch (error) {
-      console.error('Error fetching department number:', error);
-    }
-  };
-  
-  const handleDepartmentChange = (event) => {
-    const department = event.target.value;
-    setSelectedDepartment(department);
-  };
+        const packageId = formData.referencia;
+        const recipient = formData.nombre;
+        const newMessage = `Hola ${recipient}, soy el conserje. Tienes un paquete ${packageId} en la recepción. Ven a buscarlo cuando puedas. Gracias.`;
 
-  const handleSendMessage = () => {
-    const packageId = document.getElementById('packageId').value;
-    const arrivalTime = document.getElementById('arrivalTime').value;
-    const recipient = document.getElementById('recipient').value;
-    const message = `ID del paquete: ${packageId}, Hora de llegada: ${arrivalTime}, Destinatario: ${recipient}`;
-    const whatsappURL = `https://api.whatsapp.com/send?phone=${departmentNumber}&text=${encodeURIComponent(message)}`;
-    setWhatsappURL(whatsappURL);
-    window.open(whatsappURL, '_blank');
-    setMessageSent(true);
-  };
 
-  return (
-    <div>
-      <Navbar />
-      <div className="delivery-form-container">
-        <h1><center>Esta es la página de Entrega</center></h1>
-        <form className="delivery-form">
-          <label htmlFor="department">Departamento:</label>
-          <select id="department" value={selectedDepartment} onChange={handleDepartmentChange}>
-            <option value="">Seleccione un departamento</option>
-            {departments.map((dept) => (
-              <option key={dept.id} value={dept.name}>{dept.name}</option>
-            ))}
-          </select>
-          {selectedDepartment && <p>Departamento seleccionado: {selectedDepartment}</p>}
+        fetchDepartmentNumber(formData.dept, newMessage); // Pasar newMessage y formData.dept a fetchDepartmentNumber
+    };
 
-          <label htmlFor="packageId">ID del paquete:</label>
-          <input type="text" id="packageId" name="packageId" />
+    const fetchDepartmentNumber = async (department, message) => { 
+        try {
+            const response = await fetch(`https://apivercel-mwallace2002-max-wallaces-projects.vercel.app/api/department/${department}`);
+            if (!response.ok) {
+                throw new Error('Error al obtener el número de WhatsApp');
+            }
+            const data = await response.json();
+            setDepartmentNumber(data.numero);
+            handleSendMessage(data.numero, message); // Llamar a handleSendMessage con el nuevo número de departamento y el mensaje
+        } catch (error) {
+            console.error('Error fetching department number:', error);
+        }
+    };
 
-          <label htmlFor="arrivalTime">Hora de llegada:</label>
-          <input type="time" id="arrivalTime" name="arrivalTime" />
+    const handleSendMessage = (departmentNumber, message) => { // Añadir message como parámetro
+        console.log("mensaje", message); // Asegúrate de escribir console con minúscula
+        const encodedMessage = encodeURIComponent(message);
+        const url = `https://api.whatsapp.com/send?phone=${departmentNumber}&text=${encodedMessage}`;
+        console.log('URL de WhatsApp:', url);
+        setWhatsappURL(url); // Actualizar whatsappURL con la URL construida
+        window.open(url, '_blank');
+        setMessageSent(true);
+    };
 
-          <label htmlFor="recipient">Destinatario:</label>
-          <input type="text" id="recipient" name="recipient" />
-
-          <button type="button" onClick={handleSendMessage}>Enviar</button>
-          {messageSent && <p>¡Mensaje enviado correctamente!</p>}
-        </form>
-        {whatsappURL && (
-          <div className="qr-code">
-            <h2>Scan this QR Code to send the message via WhatsApp</h2>
-            <QRCode value={whatsappURL} />
-          </div>
-        )}
-      </div>
-    </div>
-  );
+    return (
+        <div>
+            <Navbar />
+            <div className="delivery-form-container">
+                <h1><center>Esta es la página de Entrega</center></h1>
+                <EntryForm onEntryCreated={handleEntryCreated} labels={labels} defaultTipo="delivery" /> {/* Pasar defaultTipo como 'delivery' */}
+                {whatsappURL && (
+                    <div className="qr-code">
+                        <center>
+                            <h2>Scan this QR Code to send the message via WhatsApp</h2>
+                            <QRCode value={whatsappURL} />
+                        </center>
+                    </div>
+                )}
+            </div>
+        </div>
+    );
 }
 
 export default DeliveryForm;

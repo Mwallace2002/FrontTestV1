@@ -34,9 +34,9 @@ const Navbar = () => {
                 )}
                 {['conserje', 'admin'].includes(userRole) && (
                     <>
+                        <li className="sidebar-item"><Link to="/home">{t('navbar.home')}</Link></li>
                         <li className="sidebar-item"><Link to="/delivery">{t('navbar.delivery')}</Link></li>
                         <li className="sidebar-item"><Link to="/vehiculos">{t('navbar.vehicles')}</Link></li>
-                        <li className="sidebar-item"><Link to="/home">{t('navbar.home')}</Link></li>
                     </>
                 )}
                 {userRole === 'admin' && (

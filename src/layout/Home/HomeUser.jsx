@@ -3,7 +3,7 @@ import Navbar from '../Navbar/Navbar.jsx';
 import './Home.css';
 import { useTranslation } from "react-i18next";
 import axios from 'axios';
-import VisitaFrecuenteForm from '../../components/visitaFrecuenteForm.jsx'; 
+import VisitaFrecuenteForm from '../../components/VisitaFrecuenteForm/visitaFrecuenteForm.jsx'; 
 
 const HomeUser = () => {
     const [t, i18n] = useTranslation("global");

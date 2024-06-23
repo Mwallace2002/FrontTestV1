@@ -1,0 +1,35 @@
+.entry-form {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.entry-form h2 {
+    margin-top: 0;
+}
+
+.entry-form input,
+.entry-form select {
+    margin-bottom: 10px;
+    padding: 8px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.entry-form button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.entry-form button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.error-message {
+    color: red;
+}
