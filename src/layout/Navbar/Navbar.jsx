@@ -20,6 +20,11 @@ const Navbar = () => {
         i18n.changeLanguage(lang);
         setSelectedLanguage(lang);
     };
+    // Función para cerrar sesión
+    const handleLogout = () => {
+        localStorage.removeItem('token');
+        window.location.href = '/login';
+    };
 
     return (
         <div className={collapse ? 'sidebar sidebar-collapse' : 'sidebar'}>
@@ -54,6 +59,9 @@ const Navbar = () => {
                         </button>
                     </div>
                 </li>
+                <div className="buttons-container">
+                    <button className="custom-button1" onClick={handleLogout}>{t("label.Logout")}</button>
+                </div>
             </ul>
             <button className="collapse-button" onClick={toggleCollapse}>
                 {collapse ? '»' : '«'}

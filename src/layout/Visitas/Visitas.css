@@ -1,0 +1,39 @@
+.visitas-form-container {
+  max-width: 500px;
+  margin: 20px auto; 
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+}
+
+.visitas-form-container h1 {
+  margin-top: 0;
+}
+
+.visitas-form label {
+  display: block;
+  margin-bottom: 8px;
+}
+
+.visitas-form input,
+.visitas-form select {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.visitas-form button {
+  padding: 10px 15px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.visitas-form button:hover {
+  background-color: #218838;
+}

@@ -3,6 +3,7 @@ import Navbar from '../Navbar/Navbar.jsx';
 import './Home.css';
 import { useTranslation } from "react-i18next";
 import axios from 'axios';
+import VisitaFrecuenteForm from '../../components/visitaFrecuenteForm.jsx'; 
 
 const HomeUser = () => {
     const [t, i18n] = useTranslation("global");
@@ -27,20 +28,15 @@ const HomeUser = () => {
             });
     };
 
-    // Función para cerrar sesión
-    const handleLogout = () => {
-        localStorage.removeItem('token');
-        window.location.href = '/login';
-    };
+
 
     return (
         <div>
             <Navbar />
             <div className="main-home">
-                <div>{t("label.Logged")}</div>
-                <div className="buttons-container">
-                    <button className="custom-button1" onClick={handleLogout}>{t("label.Logout")}</button>
-                </div>
+
+                {/* Formulario de visitas frecuentes */}
+                <VisitaFrecuenteForm />
 
                 {/* Tabla de ingresos */}
                 <div className="entries-list">

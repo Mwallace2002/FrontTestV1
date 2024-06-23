@@ -35,7 +35,7 @@ const Main = () => {
           </PrivateRoute>
         } />
         <Route path="/visitas" element={
-          <PrivateRoute requiredRole={['user', 'conserje', 'admin']}>
+          <PrivateRoute requiredRole={['conserje', 'admin']}>
             <Visitas />
           </PrivateRoute>
         } />

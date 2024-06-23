@@ -8,7 +8,7 @@ const Home = () => {
     const [t, i18n] = useTranslation("global");
     const [entries, setEntries] = useState([]);
     const [newEntry, setNewEntry] = useState({
-        tipo: '',
+        tipo: 'Persona',
         nombre: '',
         referencia: '',
         patente: '',
@@ -57,7 +57,7 @@ const Home = () => {
             .then(response => {
                 setLoading(false);
                 setNewEntry({
-                    tipo: '',
+                    tipo: 'Persona',
                     nombre: '',
                     referencia: '',
                     patente: '',
@@ -86,20 +86,29 @@ const Home = () => {
     };
     
 
-    // Función para cerrar sesión
-    const handleLogout = () => {
-        localStorage.removeItem('token');
-        localStorage.removeItem('rol');
-        window.location.href = '/login';
-    };
 
     return (
         <div>
             <Navbar />
             <div className="main-home">
-                <div>{t("label.Logged")}</div>
-                <div className="buttons-container">
-                    <button className="custom-button1" onClick={handleLogout}>{t("label.Logout")}</button>
+                {/* Formulario para registrar ingresos */}
+                <div className="entry-form">
+                    <h2>Registrar Nuevo Ingreso</h2>
+                    <form onSubmit={handleSubmit}>
+                        <input type="text" name="nombre" placeholder="Nombre" value={newEntry.nombre} onChange={handleInputChange} />
+                        <input type="text" name="referencia" placeholder="Referencia" value={newEntry.referencia} onChange={handleInputChange} />
+                        <input type="text" name="patente" placeholder="Patente" value={newEntry.patente} onChange={handleInputChange} />
+                        <select id="departmentNoFrecuente" name="dept" value={newEntry.dept} onChange={handleInputChange}>
+                            <option value="">Seleccione un departamento</option>
+                            <option value="Departamento 01">Departamento 01</option>
+                            <option value="Departamento 02">Departamento 02</option>
+                            <option value="Departamento 03">Departamento 03</option>
+                            <option value="Departamento 04">Departamento 04</option>
+                        </select>                        
+                        <input type="datetime-local" name="horario" value={newEntry.horario} onChange={handleInputChange} />
+                        <button type="submit" disabled={loading}>Registrar</button>
+                    </form>
+                    {error && <p className="error-message">{error}</p>}
                 </div>
 
                 {/* Tabla de ingresos */}
@@ -131,21 +140,6 @@ const Home = () => {
                             ))}
                         </tbody>
                     </table>
-                </div>
-
-                {/* Formulario para registrar ingresos */}
-                <div className="entry-form">
-                    <h2>Registrar Nuevo Ingreso</h2>
-                    <form onSubmit={handleSubmit}>
-                        <input type="text" name="tipo" placeholder="Tipo" value={newEntry.tipo} onChange={handleInputChange} />
-                        <input type="text" name="nombre" placeholder="Nombre" value={newEntry.nombre} onChange={handleInputChange} />
-                        <input type="text" name="referencia" placeholder="Referencia" value={newEntry.referencia} onChange={handleInputChange} />
-                        <input type="text" name="patente" placeholder="Patente" value={newEntry.patente} onChange={handleInputChange} />
-                        <input type="text" name="dept" placeholder="Dept" value={newEntry.dept} onChange={handleInputChange} />
-                        <input type="datetime-local" name="horario" value={newEntry.horario} onChange={handleInputChange} />
-                        <button type="submit" disabled={loading}>Registrar</button>
-                    </form>
-                    {error && <p className="error-message">{error}</p>}
                 </div>
             </div>
         </div>

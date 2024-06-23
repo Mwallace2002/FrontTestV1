@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Navbar from '../Navbar/Navbar.jsx';
 import './Visitas.css';
+import VisitaFrecuenteForm from '../../components/visitaFrecuenteForm.jsx'; 
 
 const departments = [
   'Ventas',
@@ -137,31 +138,8 @@ const Visitas = () => {
         </form>
       </div>
 
-      <div className="visitas-form-container">
-        <h1><center>Añadir visita frecuente</center></h1>
-        <form className="visitas-form" onSubmit={handleSubmitFrecuente}>
-          <label htmlFor="patenteFrecuente">Patente del vehículo:</label> 
-          <input type="text" id="patenteFrecuente" name="patenteFrecuente" value={patenteFrecuente} onChange={(e) => setPatenteFrecuente(e.target.value)} />
-          <label htmlFor="department">Departamento:</label>
-          <select id="department" value={selectedDepartment} onChange={handleDepartmentChange}>
-            <option value="">Seleccione un departamento</option>
-            {departments.map((dept) => (
-              <option key={dept} value={dept}>{dept}</option>
-            ))}
-          </select>
+      <VisitaFrecuenteForm />
 
-          <label htmlFor="rut">Rut de la visita (sin punto ni guion):</label>
-          <input type="text" id="rut" name="rut" value={rut} onChange={(e) => setRut(e.target.value)} />
-
-          <label htmlFor="nombre">Nombre y apellido:</label>
-          <input type="text" id="nombre" name="nombre" value={nombre} onChange={(e) => setNombre(e.target.value)} />
-
-          <label htmlFor="fechaNacimiento">Fecha de Nacimiento:</label>
-          <input type="date" id="fechaNacimiento" name="fechaNacimiento" value={fechaNacimiento} onChange={(e) => setFechaNacimiento(e.target.value)} />
-
-          <button type="submit">Submit</button>
-        </form>
-      </div>
       <div className="visitas-form-container">
         <h1><center>Añadir visita no frecuente</center></h1>
         <form className="visitas-form" onSubmit={handleSubmitNoFrecuente}>

@@ -3,28 +3,20 @@ import { Link } from 'react-router-dom';
 import Navbar from '../Navbar/Navbar.jsx';
 import './Vehiculos.css';
 
-
 const Vehiculos = () => {
   const [placa, setPlaca] = useState('');
   const [numeroEstacionamiento, setNumeroEstacionamiento] = useState('');
   const [horaEntrada, setHoraEntrada] = useState('');
-  const [tiempoEstanciaHoras, setTiempoEstanciaHoras] = useState('');
-  const [tiempoEstanciaMinutos, setTiempoEstanciaMinutos] = useState('');
-  const [tiempoEstanciaSegundos, setTiempoEstanciaSegundos] = useState('');
-  const [tiempoNotificacion, setTiempoNotificacion] = useState(''); 
-  const [mensaje, setMensaje] = useState('');
   const [tiempoHastaNotificacion, setTiempoHastaNotificacion] = useState(null);
   const [infoVehiculo, setInfoVehiculo] = useState({ placa: '', estacionamiento: '' });
-  
-  const [ocupacionEstacionamientos, setOcupacionEstacionamientos] = useState(Array(5).fill('libre')); 
-
-
-
+  const [ocupacionEstacionamientos, setOcupacionEstacionamientos] = useState(Array(5).fill('libre'));
+  const [mensaje, setMensaje] = useState('');
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    const tiempoEstancia = `${tiempoEstanciaHoras}:${tiempoEstanciaMinutos}:${tiempoEstanciaSegundos}`;
+    // Fijar tiempo de estancia en 2 minutos
+    const tiempoEstancia = '00:02:00';
 
     const vehiculoData = {
       placa,
@@ -32,19 +24,14 @@ const Vehiculos = () => {
       horaEntrada,
       tiempoEstancia
     };
-    console.log('Patente registrada:', placa); // Imprimir la patente registrada en el console log
-    console.log('Datos del vehículo:', vehiculoData);
 
     const nuevoEstadoOcupacion = [...ocupacionEstacionamientos];
-    nuevoEstadoOcupacion[numeroEstacionamiento - 1] = 'ocupado';    //funcionalidad nueva para guardar el estacionamiento ocupado
+    nuevoEstadoOcupacion[numeroEstacionamiento - 1] = 'ocupado';
     setOcupacionEstacionamientos(nuevoEstadoOcupacion);
 
     const [entradaHoras, entradaMinutos] = horaEntrada.split(':').map(Number);
-    const tiempoEstanciaTotalSegundos = 
-      (parseInt(tiempoEstanciaHoras, 10) || 0) * 3600 + 
-      (parseInt(tiempoEstanciaMinutos, 10) || 0) * 60 + 
-      (parseInt(tiempoEstanciaSegundos, 10) || 0);
-    const notificacionSegundos = (parseInt(tiempoNotificacion, 10) || 0) * 60;
+    const tiempoEstanciaTotalSegundos = 2 * 60; // Estancia fija en 2 minutos
+    const notificacionSegundos = 1 * 60; // Notificar 1 minuto antes
 
     const tiempoEntradaSegundos = entradaHoras * 3600 + entradaMinutos * 60;
     const tiempoNotificacionEnSegundos = tiempoEstanciaTotalSegundos - notificacionSegundos;
@@ -54,16 +41,12 @@ const Vehiculos = () => {
     console.log('Segundos hasta notificación:', tiempoHastaNotificacionEnSegundos);
 
     setTiempoHastaNotificacion(tiempoHastaNotificacionEnSegundos);
-    setInfoVehiculo({ placa, estacionamiento: numeroEstacionamiento }); // Guardar la placa y estacionamiento para usar en la notificación
+    setInfoVehiculo({ placa, estacionamiento: numeroEstacionamiento });
 
     // Simula guardar los datos y reinicia el formulario
     setPlaca('');
     setNumeroEstacionamiento('');
     setHoraEntrada('');
-    setTiempoEstanciaHoras('');
-    setTiempoEstanciaMinutos('');
-    setTiempoEstanciaSegundos('');
-    setTiempoNotificacion('');
   };
 
   useEffect(() => {
@@ -105,7 +88,7 @@ const Vehiculos = () => {
               <option key={num} value={num}>{num}</option>
             ))}
           </select>
-          
+
           <div className="ocupacion-estacionamientos">
             {[1, 2, 3, 4, 5].map(numero => (
               <div key={numero} className={`cuadro-ocupacion ${ocupacionEstacionamientos[numero - 1]}`}>
@@ -115,33 +98,13 @@ const Vehiculos = () => {
             ))}
           </div>
 
-               
-               
-               
-               
-                <label htmlFor="horaEntrada">Hora de Entrada:</label>
-                <input type="time" id="horaEntrada" name="horaEntrada" value={horaEntrada} onChange={(e) => setHoraEntrada(e.target.value)} />
+          <label htmlFor="horaEntrada">Hora de Entrada:</label>
+          <input type="time" id="horaEntrada" name="horaEntrada" value={horaEntrada} onChange={(e) => setHoraEntrada(e.target.value)} />
 
-                <label htmlFor="tiempoEstanciaHoras">Horas de Estancia:</label>
-                <select id="tiempoEstanciaHoras" name="tiempoEstanciaHoras" value={tiempoEstanciaHoras} onChange={(e) => setTiempoEstanciaHoras(e.target.value)}>
-                {[...Array(24).keys()].map(hour => (
-                    <option key={hour} value={hour}>{hour}</option>
-                ))}
-                </select>
-                <label htmlFor="tiempoEstanciaMinutos">Minutos de Estancia:</label>
-                <select id="tiempoEstanciaMinutos" name="tiempoEstanciaMinutos" value={tiempoEstanciaMinutos} onChange={(e) => setTiempoEstanciaMinutos(e.target.value)}>
-                {[...Array(60).keys()].map(minute => (
-                    <option key={minute} value={minute}>{minute}</option>
-                ))}
-                </select>
-                <label htmlFor="tiempoNotificacion">Tiempo de Notificación (minutos antes):</label>
-                <input type="number" id="tiempoNotificacion" name="tiempoNotificacion" value={tiempoNotificacion} onChange={(e) => setTiempoNotificacion(e.target.value)} />
-
-                <button type="submit">Registrar</button>
-            </form>
-            {mensaje && <p className="mensaje">{mensaje}</p>}
-            
-            </div>
+          <button type="submit">Registrar</button>
+        </form>
+        {mensaje && <p className="mensaje">{mensaje}</p>}
+      </div>
     </div>
   );
 };
