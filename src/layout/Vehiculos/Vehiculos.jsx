@@ -11,6 +11,10 @@ function Vehiculos() {
   const [freeSpots, setFreeSpots] = useState([]);
   const [tiempoEstancia, setTiempoEstancia] = useState(0); // Tiempo de estancia en minutos
   const [tiempoAdvertencia, setTiempoAdvertencia] = useState(0); // Tiempo de advertencia en minutos
+  const [whatsappURL, setWhatsappURL] = useState('');
+  const [departmentNumber, setDepartmentNumber] = useState('');
+
+
 
   const labels = {
     formTitle: 'Registro de Vehículos',
@@ -52,6 +56,30 @@ function Vehiculos() {
     fetchParameters();
   }, []);
 
+  const fetchDepartmentNumber = async (department, message) => { 
+    try {
+      const response = await fetch(`https://apivercel-mwallace2002-max-wallaces-projects.vercel.app/api/department/${department}`);
+      if (!response.ok) {
+        throw new Error('Error al obtener el número de WhatsApp');
+      }
+      const data = await response.json();
+      setDepartmentNumber(data.numero);
+  
+      // Construir la URL de WhatsApp y actualizar whatsappURL
+      const encodedMessage = encodeURIComponent(message);
+      const url = `https://api.whatsapp.com/send?phone=${data.numero}&text=${encodedMessage}`;
+      console.log('URL de WhatsApp:', url);
+      setWhatsappURL(url); // Actualizar whatsappURL con la URL construida
+  
+      // Mostrar mensaje después de actualizar whatsappURL si es necesario
+      setMessage(message);
+    } catch (error) {
+      console.error('Error fetching department number:', error);
+    }
+  };
+  
+
+
   const handleEntryCreated = async (formData) => {
     try {
       if (freeSpots.length === 0) {
@@ -64,8 +92,11 @@ function Vehiculos() {
 
       // Temporizador para mostrar el mensaje de advertencia
       const tiempoRestante = tiempoAdvertencia * 60000; // Convertir minutos a milisegundos
+      console.log('dept:', formData.dept);
+      console.log('el log:',  formData.dept, `El vehículo ${formData.nombre} de patente ${formData.referencia} le queda ${tiempoAdvertencia} minutos antes que se acabe su tiempo.`);
       setTimeout(() => {
         setMessage(`El vehículo ${formData.nombre} de patente ${formData.referencia} le queda ${tiempoAdvertencia} minutos antes que se acabe su tiempo.`);
+        fetchDepartmentNumber(formData.dept, `El vehículo ${formData.nombre} de patente ${formData.referencia} le queda ${tiempoAdvertencia} minutos antes que se acabe su tiempo.`);
       }, tiempoRestante);
 
       const randomIndex = Math.floor(Math.random() * freeSpots.length);
@@ -137,9 +168,15 @@ function Vehiculos() {
       <div className='vehiculos-form-container'>
         <h1>Registro de Vehículos</h1>
         <EntryForm onEntryCreated={handleEntryCreated} labels={labels} defaultTipo="Vehiculo" />
-        {message && <p className="mensaje">{message}</p>}
         <div className='graphics-container'>
             <ParkingStatus freeSpots={freeSpots} onFreeSpot={handleFreeSpot} /> {/* Pasar la lista de estacionamientos libres y la función para liberar */}
+        </div>
+        {message && <p className="mensaje">{message}</p>}
+        <div className="qr-code">
+          <center>
+            <h2>Scan this QR Code to send the message via WhatsApp</h2>
+            <QRCode value={whatsappURL} />
+          </center>
         </div>
       </div>        
     </div>

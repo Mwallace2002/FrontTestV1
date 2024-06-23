@@ -4,10 +4,10 @@ import './Visitas.css';
 import VisitaFrecuenteForm from '../../components/VisitaFrecuenteForm/visitaFrecuenteForm.jsx'; 
 
 const departments = [
-  'Ventas',
-  'Marketing',
-  'Desarrollo',
-  'Recursos humanos'
+  'Departamento 01',
+  'Departamento 02',
+  'Departamento 03',
+  'Departamento 04'
 ];
 
 const Visitas = () => {

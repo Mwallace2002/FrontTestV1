@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './Admin.css'; // Asegúrate de importar el CSS aquí
+import Navbar from '../Navbar/Navbar.jsx';
 
 function Admin() {
   const [tiempoEstancia, setTiempoEstancia] = useState('');
