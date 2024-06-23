@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import Navbar from '../Navbar/Navbar.jsx';
 import QRCode from 'qrcode.react';
 import './Delivery.css';
-import EntryForm from '../../components/entryForm/EntryForm.jsx';
+import EntryForm from '../../components/EntryForm/EntryForm.jsx';
 
 function DeliveryForm() {
     const [whatsappURL, setWhatsappURL] = useState('');

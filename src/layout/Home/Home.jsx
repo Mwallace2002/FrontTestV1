@@ -4,7 +4,7 @@ import Navbar from '../Navbar/Navbar.jsx';
 import './Home.css';
 import { useTranslation } from "react-i18next";
 import axios from 'axios';
-import EntryForm from '../../components/entryForm/EntryForm.jsx'; 
+import EntryForm from '../../components/EntryForm/EntryForm.jsx'; 
 
 const Home = () => {
     const [t, i18n] = useTranslation("global");

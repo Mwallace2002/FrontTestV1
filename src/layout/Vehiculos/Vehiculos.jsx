@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import EntryForm from '../../components/entryForm/EntryForm.jsx';
+import EntryForm from '../../components/EntryForm/EntryForm.jsx';
 import Navbar from '../Navbar/Navbar.jsx';
 import ParkingStatus from '../../components/ParkingStatus/ParkingStatus.jsx'; 
 import './Vehiculos.css'; 
