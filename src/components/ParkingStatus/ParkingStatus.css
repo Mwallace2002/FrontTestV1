@@ -1,0 +1,31 @@
+.parking-status-container {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.parking-spot {
+  width: 200px;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  color: white;
+}
+
+.parking-spot.free {
+  background-color: green;
+}
+
+.parking-spot.occupied {
+  background-color: red;
+}
+
+.free-button {
+  margin-top: 10px;
+  padding: 5px 10px;
+  font-size: 12px;
+  cursor: pointer;
+}
