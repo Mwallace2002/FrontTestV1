@@ -3,6 +3,7 @@ import Navbar from '../Navbar/Navbar.jsx';
 import QRCode from 'qrcode.react';
 import './Delivery.css';
 import EntryForm from '../../components/EntryForm/EntryForm.jsx';
+import { useTranslation } from 'react-i18next';
 
 function DeliveryForm() {
     const { t, i18n } = useTranslation('global');
