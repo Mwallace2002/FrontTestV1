@@ -3,8 +3,10 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin: 0 auto;
-    width: 300px;
+    margin: 20px auto; /* Aumentado el margen para separación */
+    max-width: 100%; /* Aprovecha todo el ancho disponible */
+    width: 300px; /* Ancho máximo del contenido */
+    box-sizing: border-box; /* Asegura que el padding no afecte el ancho total */
 }
 
 .custom-button1 {
@@ -14,14 +16,14 @@
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    width: 100%; /* Botón ocupa todo el ancho disponible */
+    box-sizing: border-box; /* Asegura que el padding no afecte el ancho total */
+    margin-bottom: 10px; /* Espacio entre botones */
 }
 
-.custom-button1:hover {
-    background-color: #e07b00; /* Color de fondo del botón al pasar el ratón actualizado */
-}
-
+.custom-button1:hover,
 .custom-button1:active {
-    background-color: #e07b00; /* Color de fondo del botón al hacer clic actualizado */
+    background-color: #e07b00; /* Color de fondo del botón al pasar o hacer clic actualizado */
 }
 
 .custom-button1:focus {
@@ -30,21 +32,26 @@
 
 .buttons-container {
     display: flex;
+    flex-wrap: wrap; /* Asegura que los botones se envuelvan en dispositivos pequeños */
     justify-content: center;
-    gap: 10px; 
-    margin-bottom: 10px; 
+    gap: 10px;
+    margin-bottom: 20px; /* Mayor espacio entre el contenedor de botones y otros elementos */
 }
 
 .home-container {
-    max-width: 800px;
+    max-width: 100%; /* Aprovecha todo el ancho disponible */
+    width: 800px; /* Ancho máximo del contenido */
     margin: 0 auto;
     padding: 20px;
+    box-sizing: border-box; /* Asegura que el padding no afecte el ancho total */
 }
 
 .entries-list {
     margin-bottom: 20px;
-    margin-top: 10px;
-    background-color: #d4a682; 
+    background-color: #d4a682;
+    border: 1px solid #ddd; /* Añadido borde para separación */
+    padding: 10px; /* Espaciado interior */
+    overflow-x: auto; /* Agregado para permitir desplazamiento horizontal en tablas grandes */
 }
 
 .entries-list table {
@@ -52,17 +59,33 @@
     border-collapse: collapse;
 }
 
-.entries-list th, .entries-list td {
-    border: 1px solid #ddd; /* Color del borde actualizado */
+.entries-list th,
+.entries-list td {
+    border: 1px solid #ddd;
     padding: 8px;
     text-align: left;
 }
 
+/* Media query para ajustar estilos en pantallas más pequeñas */
+@media screen and (max-width: 600px) {
+    .entries-list {
+        padding: 5px; /* Reducir el padding para ahorrar espacio */
+    }
+
+    .entries-list th,
+    .entries-list td {
+        padding: 6px; /* Ajustar el padding de las celdas */
+        font-size: 12px; /* Reducir el tamaño del texto para mejor legibilidad */
+    }
+}
+
+
 .entry-form {
-    background-color: #d4a682; /* Color de fondo actualizado */
-    border: 1px solid #ddd; /* Color del borde actualizado */
+    background-color: #d4a682;
+    border: 1px solid #ddd;
     padding: 20px;
     margin-top: 20px;
+    box-sizing: border-box; /* Asegura que el padding no afecte el ancho total */
 }
 
 .entry-form h2 {
@@ -74,7 +97,7 @@
     margin-bottom: 10px;
     padding: 8px;
     width: 100%;
-    box-sizing: border-box;
+    box-sizing: border-box; /* Asegura que el padding no afecte el ancho total */
 }
 
 .entry-form button {
@@ -83,6 +106,8 @@
     color: white;
     border: none;
     cursor: pointer;
+    width: 100%; /* Botón ocupa todo el ancho disponible */
+    box-sizing: border-box; /* Asegura que el padding no afecte el ancho total */
 }
 
 .entry-form button:disabled {

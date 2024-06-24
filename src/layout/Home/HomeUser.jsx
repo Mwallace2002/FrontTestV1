@@ -3,10 +3,10 @@ import Navbar from '../Navbar/Navbar.jsx';
 import './Home.css';
 import { useTranslation } from "react-i18next";
 import axios from 'axios';
-import VisitaFrecuenteForm from '../../components/VisitaFrecuenteForm/visitaFrecuenteForm.jsx'; 
+import EntryForm from '../../components/EntryForm/EntryForm.jsx'; 
 
 const HomeUser = () => {
-    const [t, i18n] = useTranslation("global");
+    const { t } = useTranslation("global");
     const [entries, setEntries] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
@@ -15,6 +15,13 @@ const HomeUser = () => {
     useEffect(() => {
         fetchEntries();
     }, []);
+    const labels = {
+        formTitle: t('home.formTitle'),
+        namePlaceholder: t('home.namePlaceholder'),
+        referencePlaceholder: t('home.referencePlaceholder'),
+        departmentPlaceholder: t('home.departmentPlaceholder'),
+        submitButton: t('home.submitButton')
+    };
 
     // Función para obtener los ingresos desde el backend
     const fetchEntries = () => {
@@ -27,30 +34,26 @@ const HomeUser = () => {
                 setError('Error fetching entries. Please try again later.');
             });
     };
-
-
+    const defaultTipo = 'visitas'; // Establecer el tipo predeterminado español por la base de datos
 
     return (
         <div>
             <Navbar />
             <div className="main-home">
-
-                {/* Formulario de visitas frecuentes */}
-                <VisitaFrecuenteForm />
-
-                {/* Tabla de ingresos */}
+                <EntryForm onEntryCreated={fetchEntries} labels={labels} defaultTipo={defaultTipo} />
                 <div className="entries-list">
-                    <h2>Lista de Ingresos</h2>
+                    <h2>{t('home.entriesList')}</h2>
+                    {error && <p>{t('home.errorFetchingEntries')}</p>}
                     <table>
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Tipo</th>
-                                <th>Nombre</th>
-                                <th>Referencia</th>
-                                <th>Patente</th>
-                                <th>Dept</th>
-                                <th>Horario</th>
+                                <th>{t('home.type')}</th>
+                                <th>{t('home.name')}</th>
+                                <th>{t('home.reference')}</th>
+                                <th>{t('home.plate')}</th>
+                                <th>{t('home.department')}</th>
+                                <th>{t('home.schedule')}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -74,3 +77,4 @@ const HomeUser = () => {
 };
 
 export default HomeUser;
+

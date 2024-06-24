@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './visitaFrecuenteForm.css';
+import { useTranslation } from 'react-i18next';
 
 const departments = [
   'Ventas',
@@ -9,6 +10,7 @@ const departments = [
 ];
 
 const VisitaFrecuenteForm = () => {
+  const { t } = useTranslation("global");
   const [selectedDepartment, setSelectedDepartment] = useState('');
   const [rut, setRut] = useState('');
   const [nombre, setNombre] = useState('');
@@ -38,40 +40,41 @@ const VisitaFrecuenteForm = () => {
       });
 
       if (!response.ok) {
-        throw new Error('Error al agregar visita frecuente');
+        throw new Error(t('visitaFrecuenteForm.errorAddFrequentVisit'));
       }
 
       const data = await response.json();
-      console.log('Visita frecuente agregada:', data);
+      console.log(t('visitaFrecuenteForm.frequentVisitAdded'), data);
     } catch (error) {
-      console.error('Error:', error.message);
+      console.error(t('visitaFrecuenteForm.error'), error.message);
     }
   };
 
   return (
     <div className="visitas-form-container">
-      <h1><center>Añadir visita frecuente</center></h1>
+      <h1><center>{t('visitaFrecuenteForm.addFrequentVisit')}</center></h1>
       <form className="visitas-form" onSubmit={handleSubmitFrecuente}>
-        <label htmlFor="patenteFrecuente">Patente del vehículo:</label> 
+        <label htmlFor="patenteFrecuente">{t('visitaFrecuenteForm.vehicleLicensePlate')}</label>
         <input type="text" id="patenteFrecuente" name="patenteFrecuente" value={patenteFrecuente} onChange={(e) => setPatenteFrecuente(e.target.value)} />
-        <label htmlFor="department">Departamento:</label>
+        
+        <label htmlFor="department">{t('visitaFrecuenteForm.department')}</label>
         <select id="department" value={selectedDepartment} onChange={handleDepartmentChange}>
-          <option value="">Seleccione un departamento</option>
+          <option value="">{t('visitaFrecuenteForm.selectDepartment')}</option>
           {departments.map((dept) => (
             <option key={dept} value={dept}>{dept}</option>
           ))}
         </select>
 
-        <label htmlFor="rut">Rut de la visita (sin punto ni guion):</label>
+        <label htmlFor="rut">{t('visitaFrecuenteForm.visitRut')}</label>
         <input type="text" id="rut" name="rut" value={rut} onChange={(e) => setRut(e.target.value)} />
 
-        <label htmlFor="nombre">Nombre y apellido:</label>
+        <label htmlFor="nombre">{t('visitaFrecuenteForm.name')}</label>
         <input type="text" id="nombre" name="nombre" value={nombre} onChange={(e) => setNombre(e.target.value)} />
 
-        <label htmlFor="fechaNacimiento">Fecha de Nacimiento:</label>
+        <label htmlFor="fechaNacimiento">{t('visitaFrecuenteForm.birthDate')}</label>
         <input type="date" id="fechaNacimiento" name="fechaNacimiento" value={fechaNacimiento} onChange={(e) => setFechaNacimiento(e.target.value)} />
 
-        <button type="submit">Submit</button>
+        <button type="submit">{t('visitaFrecuenteForm.submit')}</button>
       </form>
     </div>
   );

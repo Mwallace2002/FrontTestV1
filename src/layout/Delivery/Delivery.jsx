@@ -1,4 +1,3 @@
-// DeliveryForm.jsx
 import React, { useState } from 'react';
 import Navbar from '../Navbar/Navbar.jsx';
 import QRCode from 'qrcode.react';
@@ -30,11 +29,10 @@ function DeliveryForm() {
         const recipient = formData.nombre;
         const newMessage = `Hola ${recipient}, soy el conserje. Tienes un paquete ${packageId} en la recepción. Ven a buscarlo cuando puedas. Gracias.`;
 
-
         fetchDepartmentNumber(formData.dept, newMessage); // Pasar newMessage y formData.dept a fetchDepartmentNumber
     };
 
-    const fetchDepartmentNumber = async (department, message) => { 
+    const fetchDepartmentNumber = async (department, message) => {
         try {
             const response = await fetch(`https://apivercel-mwallace2002-max-wallaces-projects.vercel.app/api/department/${department}`);
             if (!response.ok) {
@@ -62,12 +60,12 @@ function DeliveryForm() {
         <div>
             <Navbar />
             <div className="delivery-form-container">
-                <h1><center>Esta es la página de Entrega</center></h1>
+                <h1><center>{t('delivery.title')}</center></h1>
                 <EntryForm onEntryCreated={handleEntryCreated} labels={labels} defaultTipo="delivery" /> {/* Pasar defaultTipo como 'delivery' */}
                 {whatsappURL && (
                     <div className="qr-code">
                         <center>
-                            <h2>Scan this QR Code to send the message via WhatsApp</h2>
+                            <h2>{t('delivery.scanQR')}</h2> {/* Traducción para scan QR */}
                             <QRCode value={whatsappURL} />
                         </center>
                     </div>

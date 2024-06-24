@@ -6,5 +6,113 @@
         "Logged": "Sesion iniciada",
         "Database": "Base de datos",
         "Logout": "Cerrar sesión"
+    },
+    "entryForm": {
+        "formTitle": "Formulario de Entrada",
+        "namePlaceholder": "Nombre",
+        "referencePlaceholder": "Referencia",
+        "departmentPlaceholder": "Seleccionar Departamento",
+        "submitButton": "Enviar",
+        "loading": "Enviando...",
+        "errorIncompleteFields": "Por favor complete todos los campos.",
+        "errorRequest": "Error en la solicitud",
+        "errorCreateEntry": "Error creando la entrada. Por favor, intente nuevamente.",
+        "errorNetwork": "Error de red. Por favor, intente nuevamente."
+    },
+    "parkingStatus": {
+        "parkingSpot": "Estacionamiento",
+        "freeButton": "Liberar Estacionamiento"
+    },
+    "visitaFrecuenteForm": {
+        "addFrequentVisit": "Añadir visita frecuente",
+        "vehicleLicensePlate": "Patente del vehículo:",
+        "department": "Departamento:",
+        "selectDepartment": "Seleccione un departamento",
+        "visitRut": "RUT de la visita (sin puntos ni guiones):",
+        "name": "Nombre y apellido:",
+        "birthDate": "Fecha de Nacimiento:",
+        "submit": "Enviar",
+        "errorAddFrequentVisit": "Error al agregar visita frecuente",
+        "frequentVisitAdded": "Visita frecuente agregada:",
+        "error": "Error:"
+    },
+    "vehiculos": {
+        "formTitle": "Registro de Vehículos",
+        "namePlaceholder": "Vehículo",
+        "referencePlaceholder": "Patente",
+        "departmentPlaceholder": "Seleccionar Departamento",
+        "submitButton": "Registrar",
+        "fetchFreeSpotsError": "Error al obtener estacionamientos libres.",
+        "fetchParamsError": "Error al obtener parámetros de tiempo.",
+        "fetchDeptNumberError": "Error al obtener el número de WhatsApp",
+        "whatsappURL": "URL de WhatsApp:",
+        "noFreeSpots": "No hay lugares de estacionamiento disponibles.",
+        "advertenciaMessage": "El vehículo {{nombre}} de patente {{referencia}} le queda {{tiempoAdvertencia}} minutos antes que se acabe su tiempo.",
+        "dataSentToBackend": "Datos enviados al backend:",
+        "createVehicleError": "Error creando vehículo",
+        "registerVehicleError": "Error al registrar el vehículo",
+        "vehicleRegistered": "Se ingresó el vehículo {{nombre}} con patente {{referencia}} en el estacionamiento {{estacionamiento}}.",
+        "dataSentToDelete": "Datos enviados para borrar:",
+        "freeSpotError": "Error liberando estacionamiento",
+        "spotFreed": "Estacionamiento {{id}} liberado exitosamente.",
+        "scanQRCode": "Escanea este código QR para enviar el mensaje por WhatsApp"
+    },
+    "visitas": {
+        "verifyFrequentVisit": "Verificar si es visita frecuente",
+        "rutPlaceholder": "Rut de la visita (sin punto ni guion):",
+        "submitButton": "Enviar",
+        "addFrequentVisitError": "Error al agregar visita frecuente",
+        "frequentVisitAdded": "Visita frecuente agregada:",
+        "addNonFrequentVisitError": "Error al agregar visita no frecuente",
+        "nonFrequentVisitAdded": "Visita no frecuente agregada:",
+        "error": "Error",
+        "verifyFrequentVisitError": "Error al verificar visita frecuente",
+        "isFrequentVisit": "La visita es frecuente",
+        "isNotFrequentVisit": "La visita no es frecuente",
+        "addNonFrequentVisit": "Añadir visita no frecuente",
+        "vehiclePlate": "Patente del vehículo:",
+        "selectDepartment": "Departamento:",
+        "selectDepartmentOption": "Seleccione un departamento",
+        "rutNoFrequentPlaceholder": "Rut de la visita no frecuente (sin punto ni guion):",
+        "namePlaceholder": "Nombre y apellido:",
+        "birthDatePlaceholder": "Fecha de Nacimiento:"
+    },
+    "navbar": {
+        "admin": "Administrador",
+        "homeuser": "Inicio Usuario",
+        "home": "Inicio",
+        "delivery": "Entrega",
+        "vehicles": "Vehículos",
+        "visits": "Visitas"
+    },
+    "home": {
+        "entriesList": "Lista de Ingresos",
+        "type": "Tipo",
+        "name": "Nombre",
+        "reference": "Referencia (RUT / Patente / ID Paquete)",
+        "department": "Dept",
+        "schedule": "Horario",
+        "errorFetchingEntries": "Error al obtener los ingresos. Por favor, inténtelo de nuevo más tarde.",
+        "formTitle": "Registrar Nuevo Ingreso",
+        "namePlaceholder": "Nombre",
+        "referencePlaceholder": "Referencia",
+        "departmentPlaceholder": "Seleccione un departamento",
+        "submitButton": "Registrar"
+    },
+    "delivery": {
+        "title": "Envios",
+        "scanQR": "Escanea este Qr para enviar el mensaje por WhatsApp",
+        "formTitle": "Registrar el envio",
+        "namePlaceholder": "Nombre Recipiente",
+        "referencePlaceholder": "ID del paquete",
+        "departmentPlaceholder": "Seleccione un departamento",
+        "submitButton": "Registrar"
+    },
+    "admin": {
+        "parametersConfig": "Configuración de Parámetros",
+        "stayTime": "Tiempo de Estancia", 
+        "warningTime": "Tiempo para Advertencia", 
+        "updateParameters": "Actualizar Parámetros", 
+        "updateError": "Error al actualizar parámetros"
     }
 }

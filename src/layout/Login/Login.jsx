@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from 'react-router-dom';
 import logo from './images/logo.jpeg'; // Importa la imagen
+import Navbar from '../Navbar/Navbar.jsx';
 
 const Login = () => {
     const [password, setPassword] = useState('');
@@ -10,8 +11,14 @@ const Login = () => {
     const [loginSuccessful, setLoginSuccessful] = useState(false);
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
+    const [selectedLanguage, setSelectedLanguage] = useState(localStorage.getItem('i18nextLng') || 'es'); // Default to Spanish if no language is stored
     const { t, i18n } = useTranslation("global");
     const navigate = useNavigate();
+
+    const changeLanguage = (lang) => {
+        i18n.changeLanguage(lang);
+        setSelectedLanguage(lang);
+    };
 
     const handleLogin = (e) => {
         e.preventDefault();
@@ -75,46 +82,43 @@ const Login = () => {
     };
 
     return (
-        <>
+        <>  
+            <div><Navbar /></div>
             <div className="condominium-header">
                 <h1 className="condominium-title">CONDOMINIUM</h1>
                 <img src={logo} alt="Logo del condominio" className="condominium-logo"/>
             </div>
-            {loginSuccessful ? (
-                <p>Loading...</p>
-            ) : (
-                <div className="custom-form">
-                    <form onSubmit={handleLogin}>
-                                <label className="custom-label" style={{ color: 'white', fontWeight: 'bold' }}>{t("label.Username")}</label>
-                                <input
-                                    onChange={(event) => setUsername(event.target.value)}
-                                    placeholder="username"
-                                    className="custom-input"
-                                    type="text"
-                                    required
-                                />
-                                <label className="custom-label"  style={{ color: 'white', fontWeight: 'bold' }}>{t("label.Password")}</label>
-                                <input
-                                    onChange={(event) => setPassword(event.target.value)}
-                                    placeholder="password"
-                                    className="custom-input"
-                                    type="password"
-                                    required
-                                />
-                                <div className="login-button">
-                                    <button className="custom-button" type="submit" disabled={loading}>
-                                        {loading ? 'Logging in...' : t("label.Login")}
-                                    </button>
-                                </div>
-                                {error && <p className="error-message">{error}</p>}
-                                <div className="buttons-container">
-                                    <button onClick={(event) => { event.preventDefault(); i18n.changeLanguage("es") }}>ES</button>
-                                    <button onClick={(event) => { event.preventDefault(); i18n.changeLanguage("en") }}>EN</button>
-                                </div>
-                            </form>
-                        </div>
+            <div className="custom-form">
+                <form onSubmit={handleLogin}>
+                    {!loginSuccessful && (
+                        <>
+                            <label className="custom-label" style={{ color: 'white', fontWeight: 'bold' }}>{t("label.Username")}</label>
+                            <input
+                                onChange={(event) => setUsername(event.target.value)}
+                                placeholder="username"
+                                className="custom-input"
+                                type="text"
+                                required
+                            />
+                            <label className="custom-label"  style={{ color: 'white', fontWeight: 'bold' }}>{t("label.Password")}</label>
+                            <input
+                                onChange={(event) => setPassword(event.target.value)}
+                                placeholder="password"
+                                className="custom-input"
+                                type="password"
+                                required
+                            />
+                            <div className="login-button">
+                                <button className="custom-button" type="submit" disabled={loading}>
+                                    {loading ? 'Logging in...' : t("label.Login")}
+                                </button>
+                            </div>
+                            {error && <p className="error-message">{error}</p>}
+                        </>
                     )}
-                </>
+                </form>
+            </div>
+        </>
     );
 }
 

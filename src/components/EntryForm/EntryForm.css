@@ -1,8 +1,14 @@
+/* EntryForm.css */
+
+/* Estilos principales */
 .entry-form {
     background-color: #d4a682;
     border: 1px solid #d4a682;
     padding: 20px;
     margin-top: 20px;
+    max-width: 600px; /* Limitar el ancho máximo */
+    margin-left: auto; /* Centramos el formulario */
+    margin-right: auto; /* Centramos el formulario */
 }
 
 .entry-form h2 {
@@ -23,6 +29,7 @@
     color: white;
     border: none;
     cursor: pointer;
+    width: 100%; /* Aseguramos que el botón sea 100% ancho en móviles */
 }
 
 .entry-form button:disabled {
@@ -32,4 +39,21 @@
 
 .error-message {
     color: red;
+}
+
+/* Estilos para pantallas pequeñas */
+@media (max-width: 600px) {
+    .entry-form {
+        padding: 15px; /* Reducimos el padding en pantallas pequeñas */
+    }
+    
+    .entry-form h2 {
+        font-size: 1.5em; /* Ajustamos el tamaño de la fuente */
+    }
+    
+    .entry-form input,
+    .entry-form select,
+    .entry-form button {
+        font-size: 1em; /* Ajustamos el tamaño de la fuente de los inputs y botón */
+    }
 }

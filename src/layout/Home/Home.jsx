@@ -7,7 +7,7 @@ import axios from 'axios';
 import EntryForm from '../../components/EntryForm/EntryForm.jsx'; 
 
 const Home = () => {
-    const [t, i18n] = useTranslation("global");
+    const { t, i18n } = useTranslation("global");
     const [entries, setEntries] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
@@ -23,36 +23,36 @@ const Home = () => {
             })
             .catch(error => {
                 console.error('Error fetching entries:', error);
-                setError('Error fetching entries. Please try again later.');
+                setError(t('home.errorFetchingEntries'));
             });
     };
 
     const labels = {
-        formTitle: 'Registrar Nuevo Ingreso',
-        namePlaceholder: 'Nombre',
-        referencePlaceholder: 'RUT',
-        departmentPlaceholder: 'Seleccione un departamento',
-        submitButton: 'Registrar'
+        formTitle: t('home.formTitle'),
+        namePlaceholder: t('home.namePlaceholder'),
+        referencePlaceholder: t('home.referencePlaceholder'),
+        departmentPlaceholder: t('home.departmentPlaceholder'),
+        submitButton: t('home.submitButton')
     };
 
-    const defaultTipo = 'visitas'; // Establecer el tipo predeterminado
+    const defaultTipo = 'visitas'; // Establecer el tipo predeterminado español por la base de datos
 
     return (
         <div>
             <Navbar />
             <div className="main-home">
-                <EntryForm onEntryCreated={fetchEntries} labels={labels} defaultTipo={defaultTipo} /> {/* Pasar defaultTipo como prop */}
+                <EntryForm onEntryCreated={fetchEntries} labels={labels} defaultTipo={defaultTipo} />
                 <div className="entries-list">
-                    <h2>Lista de Ingresos</h2>
+                    <h2>{t('home.entriesList')}</h2>
                     <table>
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Tipo</th>
-                                <th>Nombre</th>
-                                <th>Referencia (RUT / Patente / ID Paquete)</th>
-                                <th>Dept</th>
-                                <th>Horario</th>
+                                <th>{t('home.type')}</th>
+                                <th>{t('home.name')}</th>
+                                <th>{t('home.reference')}</th>
+                                <th>{t('home.department')}</th>
+                                <th>{t('home.schedule')}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -68,6 +68,7 @@ const Home = () => {
                             ))}
                         </tbody>
                     </table>
+                    {error && <p>{error}</p>}
                 </div>
             </div>
         </div>

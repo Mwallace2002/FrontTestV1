@@ -4,8 +4,10 @@ import Navbar from '../Navbar/Navbar.jsx';
 import ParkingStatus from '../../components/ParkingStatus/ParkingStatus.jsx'; 
 import './Vehiculos.css'; 
 import QRCode from 'qrcode.react';
+import { useTranslation } from 'react-i18next';
 
 function Vehiculos() {
+  const { t } = useTranslation("global");
   const [message, setMessage] = useState('');
   const [freeSpots, setFreeSpots] = useState([]);
   const [tiempoEstancia, setTiempoEstancia] = useState(0);
@@ -15,23 +17,23 @@ function Vehiculos() {
   const [showQR, setShowQR] = useState(false); // Estado para mostrar o no el QR y el mensaje
 
   const labels = {
-    formTitle: 'Registro de Vehículos',
-    namePlaceholder: 'Vehículo',
-    referencePlaceholder: 'Patente',
-    departmentPlaceholder: 'Seleccionar Departamento',
-    submitButton: 'Registrar'
+    formTitle: t('vehiculos.formTitle'),
+    namePlaceholder: t('vehiculos.namePlaceholder'),
+    referencePlaceholder: t('vehiculos.referencePlaceholder'),
+    departmentPlaceholder: t('vehiculos.departmentPlaceholder'),
+    submitButton: t('vehiculos.submitButton')
   };
 
   const fetchFreeSpots = async () => {
     try {
       const response = await fetch('https://apivercel-mwallace2002-max-wallaces-projects.vercel.app/api/vehicles/free-spots');
       if (!response.ok) {
-        throw new Error('Error al obtener estacionamientos libres.');
+        throw new Error(t('vehiculos.fetchFreeSpotsError'));
       }
       const spots = await response.json();
       setFreeSpots(spots);
     } catch (error) {
-      console.error('Error al obtener estacionamientos libres:', error);
+      console.error(t('vehiculos.fetchFreeSpotsError'), error);
     }
   };
 
@@ -41,13 +43,13 @@ function Vehiculos() {
       try {
         const response = await fetch('https://apivercel-mwallace2002-max-wallaces-projects.vercel.app/api/parametros');
         if (!response.ok) {
-          throw new Error('Error al obtener parámetros de tiempo.');
+          throw new Error(t('vehiculos.fetchParamsError'));
         }
         const params = await response.json();
         setTiempoEstancia(params.TiempoEstancia);
         setTiempoAdvertencia(params.TiempoAdvertencia);
       } catch (error) {
-        console.error('Error al obtener parámetros de tiempo:', error);
+        console.error(t('vehiculos.fetchParamsError'), error);
       }
     };
 
@@ -58,26 +60,33 @@ function Vehiculos() {
     try {
       const response = await fetch(`https://apivercel-mwallace2002-max-wallaces-projects.vercel.app/api/department/${department}`);
       if (!response.ok) {
-        throw new Error('Error al obtener el número de WhatsApp');
+        throw new Error(t('vehiculos.fetchDeptNumberError'));
       }
       const data = await response.json();
       setDepartmentNumber(data.numero);
   
       const encodedMessage = encodeURIComponent(message);
       const url = `https://api.whatsapp.com/send?phone=${data.numero}&text=${encodedMessage}`;
-      console.log('URL de WhatsApp:', url);
+      console.log(t('vehiculos.whatsappURL'), url);
       setWhatsappURL(url);
       setMessage(message);
       setShowQR(true); // Mostrar el QR y el mensaje cuando se tiene el URL de WhatsApp
     } catch (error) {
-      console.error('Error fetching department number:', error);
+      console.error(t('vehiculos.fetchDeptNumberError'), error);
     }
+  };
+
+  const showMessage = (msg) => {
+    setMessage(msg);
+    setTimeout(() => {
+      setMessage('');
+    }, 10000); // Desaparece el mensaje después de 10 segundos
   };
 
   const handleEntryCreated = async (formData) => {
     try {
       if (freeSpots.length === 0) {
-        setMessage('No hay lugares de estacionamiento disponibles.');
+        showMessage(t('vehiculos.noFreeSpots'));
         return;
       }
 
@@ -86,10 +95,12 @@ function Vehiculos() {
 
       const tiempoRestante = tiempoAdvertencia * 60000;
       console.log('dept:', formData.dept);
-      console.log('el log:',  formData.dept, `El vehículo ${formData.nombre} de patente ${formData.referencia} le queda ${tiempoAdvertencia} minutos antes que se acabe su tiempo.`);
+      console.log('el log:',  formData.dept, t('vehiculos.advertenciaMessage', { nombre: formData.nombre, referencia: formData.referencia, tiempoAdvertencia }));
+
       setTimeout(() => {
-        setMessage(`El vehículo ${formData.nombre} de patente ${formData.referencia} le queda ${tiempoAdvertencia} minutos antes que se acabe su tiempo.`);
-        fetchDepartmentNumber(formData.dept, `El vehículo ${formData.nombre} de patente ${formData.referencia} le queda ${tiempoAdvertencia} minutos antes que se acabe su tiempo.`);
+        const advertenciaMessage = t('vehiculos.advertenciaMessage', { nombre: formData.nombre, referencia: formData.referencia, tiempoAdvertencia });
+        showMessage(advertenciaMessage);
+        fetchDepartmentNumber(formData.dept, advertenciaMessage);
       }, tiempoRestante);
 
       const randomIndex = Math.floor(Math.random() * freeSpots.length);
@@ -101,7 +112,7 @@ function Vehiculos() {
         estacionamiento: selectedSpot.id
       };
 
-      console.log('Datos enviados al backend:', vehicleData); 
+      console.log(t('vehiculos.dataSentToBackend'), vehicleData); 
 
       const createResponse = await fetch('https://apivercel-mwallace2002-max-wallaces-projects.vercel.app/api/vehicles', {
         method: 'POST',
@@ -113,14 +124,14 @@ function Vehiculos() {
 
       const createResponseText = await createResponse.text();
       if (!createResponse.ok) {
-        throw new Error(`Error creando vehículo: ${createResponse.statusText} - ${createResponseText}`);
+        throw new Error(`${t('vehiculos.createVehicleError')}: ${createResponse.statusText} - ${createResponseText}`);
       }
 
-      setMessage(`Se ingresó el vehículo ${formData.nombre} con patente ${formData.referencia} en el estacionamiento ${selectedSpot.id}.`);
+      showMessage(t('vehiculos.vehicleRegistered', { nombre: formData.nombre, referencia: formData.referencia, estacionamiento: selectedSpot.id }));
       fetchFreeSpots(); 
     } catch (error) {
-      console.error('Error creando vehículo:', error);
-      setMessage(`Error al registrar el vehículo: ${error.message}`);
+      console.error(t('vehiculos.createVehicleError'), error);
+      showMessage(`${t('vehiculos.registerVehicleError')}: ${error.message}`);
     }
   };
 
@@ -132,7 +143,7 @@ function Vehiculos() {
         estacionamiento: id
       };
 
-      console.log('Datos enviados para borrar:', vehicleData);
+      console.log(t('vehiculos.dataSentToDelete'), vehicleData);
 
       const updateResponse = await fetch('https://apivercel-mwallace2002-max-wallaces-projects.vercel.app/api/vehicles', {
         method: 'POST',
@@ -144,31 +155,31 @@ function Vehiculos() {
 
       const updateResponseText = await updateResponse.text();
       if (!updateResponse.ok) {
-        throw new Error(`Error liberando estacionamiento: ${updateResponse.statusText} - ${updateResponseText}`);
+        throw new Error(`${t('vehiculos.freeSpotError')}: ${updateResponse.statusText} - ${updateResponseText}`);
       }
 
-      setMessage(`Estacionamiento ${id} liberado exitosamente.`);
+      showMessage(t('vehiculos.spotFreed', { id }));
       fetchFreeSpots(); 
     } catch (error) {
-      console.error('Error liberando estacionamiento:', error);
-      setMessage(`Error al liberar el estacionamiento: ${error.message}`);
+      console.error(t('vehiculos.freeSpotError'), error);
+      showMessage(`${t('vehiculos.freeSpotError')}: ${error.message}`);
     }
   };
 
   return (
-    <div>
+    <div style={{ display: 'flex', justifyContent: 'center' }}>
       <Navbar />
       <div className='vehiculos-form-container'>
-        <h1 style={{ color: 'white' }}>Registro de Vehículos</h1>
+        <h1 style={{ color: 'white' }}>{t('vehiculos.formTitle')}</h1>
         <EntryForm onEntryCreated={handleEntryCreated} labels={labels} defaultTipo="Vehiculo" />
         <div className='graphics-container'>
             <ParkingStatus freeSpots={freeSpots} onFreeSpot={handleFreeSpot} /> 
         </div>
-        {message && <p className="mensaje">{message}</p>}
+        <center>{message && <p className="mensaje">{message}</p>}</center>
         {showQR && (
           <div className="qr-code">
             <center>
-              <h2 style={{ color: 'white' }}>Scan this QR Code to send the message via WhatsApp</h2>
+              <h2 style={{ color: 'white' }}>{t('vehiculos.scanQRCode')}</h2>
               <QRCode value={whatsappURL} />
             </center>
           </div>

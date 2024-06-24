@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import './Admin.css'; // Asegúrate de importar el CSS aquí
 import Navbar from '../Navbar/Navbar.jsx';
+import { useTranslation } from 'react-i18next';
 
 function Admin() {
+  const { t, i18n } = useTranslation('global');
   const [tiempoEstancia, setTiempoEstancia] = useState('');
   const [tiempoAdvertencia, setTiempoAdvertencia] = useState('');
   const [message, setMessage] = useState('');
@@ -23,20 +25,21 @@ function Admin() {
         const result = await response.json();
         setMessage(result.message);
       } else {
-        setMessage('Error al actualizar parámetros');
+        setMessage(t('admin.updateError'));
       }
     } catch (error) {
       console.error('Error al actualizar parámetros:', error);
-      setMessage('Error al actualizar parámetros');
+      setMessage(t('admin.updateError'));
     }
   };
 
   return (
-    <div><Navbar />
+    <div>
+      <Navbar />
       <div className="admin-form-container">
-        <h1>Configuración de Parámetros</h1>
+        <h1>{t('admin.parametersConfig')}</h1>
         <form className="admin-form" onSubmit={handleSubmit}>
-          <label htmlFor="tiempoEstancia">Tiempo de Estancia</label>
+          <label htmlFor="tiempoEstancia">{t('admin.stayTime')}</label>
           <input
             type="text"
             id="tiempoEstancia"
@@ -45,7 +48,7 @@ function Admin() {
             required
           />
 
-          <label htmlFor="tiempoAdvertencia">Tiempo para Advertencia</label>
+          <label htmlFor="tiempoAdvertencia">{t('admin.warningTime')}</label>
           <input
             type="text"
             id="tiempoAdvertencia"
@@ -54,7 +57,7 @@ function Admin() {
             required
           />
 
-          <button type="submit">Actualizar Parámetros</button>
+          <button type="submit">{t('admin.updateParameters')}</button>
         </form>
 
         {message && (

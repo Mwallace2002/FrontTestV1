@@ -2,10 +2,12 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './EntryForm.css';
+import { useTranslation } from 'react-i18next';
 
-const EntryForm = ({ onEntryCreated, labels, defaultTipo }) => { // Recibe defaultTipo como prop
+const EntryForm = ({ onEntryCreated, defaultTipo }) => {
+    const { t } = useTranslation("global");
     const [newEntry, setNewEntry] = useState({
-        tipo: defaultTipo, // Establece el tipo con el valor predeterminado recibido
+        tipo: defaultTipo,
         nombre: '',
         referencia: '',
         dept: ''
@@ -30,7 +32,7 @@ const EntryForm = ({ onEntryCreated, labels, defaultTipo }) => { // Recibe defau
         setError('');
 
         if (!newEntry.nombre.trim() || !newEntry.referencia.trim() || !newEntry.dept.trim()) {
-            setError('Por favor complete todos los campos.');
+            setError(t('entryForm.errorIncompleteFields'));
             return;
         }
 
@@ -41,12 +43,12 @@ const EntryForm = ({ onEntryCreated, labels, defaultTipo }) => { // Recibe defau
             .then(response => {
                 setLoading(false);
                 setNewEntry({
-                    tipo: defaultTipo, // Restablece el tipo predeterminado después del envío
+                    tipo: defaultTipo,
                     nombre: '',
                     referencia: '',
                     dept: ''
                 });
-                onEntryCreated(entryWithTime); // Envía los datos del formulario al padre
+                onEntryCreated(entryWithTime);
             })
             .catch(error => {
                 setLoading(false);
@@ -54,31 +56,31 @@ const EntryForm = ({ onEntryCreated, labels, defaultTipo }) => { // Recibe defau
 
                 if (error.response) {
                     if (error.response.status === 400) {
-                        const errorMessage = error.response.data.error || 'Error en la solicitud';
+                        const errorMessage = error.response.data.error || t('entryForm.errorRequest');
                         setError(errorMessage);
                     } else {
-                        setError('Error creating entry. Please try again.');
+                        setError(t('entryForm.errorCreateEntry'));
                     }
                 } else {
-                    setError('Network error. Please try again.');
+                    setError(t('entryForm.errorNetwork'));
                 }
             });
     };
 
     return (
         <div className="entry-form">
-            <h2>{labels.formTitle}</h2>
+            <h2>{t('entryForm.formTitle')}</h2>
             <form onSubmit={handleSubmit}>
-                <input type="text" name="nombre" placeholder={labels.namePlaceholder} value={newEntry.nombre} onChange={handleInputChange} />
-                <input type="text" name="referencia" placeholder={labels.referencePlaceholder} value={newEntry.referencia} onChange={handleInputChange} />
+                <input type="text" name="nombre" placeholder={t('entryForm.namePlaceholder')} value={newEntry.nombre} onChange={handleInputChange} />
+                <input type="text" name="referencia" placeholder={t('entryForm.referencePlaceholder')} value={newEntry.referencia} onChange={handleInputChange} />
                 <select id="departmentNoFrecuente" name="dept" value={newEntry.dept} onChange={handleInputChange}>
-                    <option value="">{labels.departmentPlaceholder}</option>
+                    <option value="">{t('entryForm.departmentPlaceholder')}</option>
                     <option value="Departamento 01">Departamento 01</option>
                     <option value="Departamento 02">Departamento 02</option>
                     <option value="Departamento 03">Departamento 03</option>
                     <option value="Departamento 04">Departamento 04</option>
                 </select>
-                <button type="submit" disabled={loading}>{labels.submitButton}</button>
+                <button type="submit" disabled={loading}>{loading ? t('entryForm.loading') : t('entryForm.submitButton')}</button>
             </form>
             {error && <p className="error-message">{error}</p>}
         </div>

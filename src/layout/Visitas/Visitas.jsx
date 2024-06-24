@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Navbar from '../Navbar/Navbar.jsx';
 import './Visitas.css';
 import VisitaFrecuenteForm from '../../components/VisitaFrecuenteForm/visitaFrecuenteForm.jsx'; 
+import { useTranslation } from 'react-i18next';
 
 const departments = [
   'Departamento 01',
@@ -11,6 +12,8 @@ const departments = [
 ];
 
 const Visitas = () => {
+  const { t } = useTranslation("global");
+
   const [selectedDepartment, setSelectedDepartment] = useState('');
   const [rut, setRut] = useState('');
   const [nombre, setNombre] = useState('');
@@ -53,13 +56,13 @@ const Visitas = () => {
       });
 
       if (!response.ok) {
-        throw new Error('Error al agregar visita frecuente');
+        throw new Error(t('visitas.addFrequentVisitError'));
       }
 
       const data = await response.json();
-      console.log('Visita frecuente agregada:', data);
+      console.log(t('visitas.frequentVisitAdded'), data);
     } catch (error) {
-      console.error('Error:', error.message);
+      console.error(t('visitas.error'), error.message);
     }
   };
 
@@ -81,13 +84,13 @@ const Visitas = () => {
       });
 
       if (!response.ok) {
-        throw new Error('Error al agregar visita no frecuente');
+        throw new Error(t('visitas.addNonFrequentVisitError'));
       }
 
       const data = await response.json();
-      console.log('Visita no frecuente agregada:', data);
+      console.log(t('visitas.nonFrequentVisitAdded'), data);
     } catch (error) {
-      console.error('Error:', error.message);
+      console.error(t('visitas.error'), error.message);
     }
   };
 
@@ -104,18 +107,18 @@ const Visitas = () => {
       });
 
       if (!response.ok) {
-        throw new Error('Error al verificar visita frecuente');
+        throw new Error(t('visitas.verifyFrequentVisitError'));
       }
 
       const data = await response.json();
 
       if (data.esFrecuente) {
-        setVerificarRutMessage('La visita es frecuente');
+        setVerificarRutMessage(t('visitas.isFrequentVisit'));
       } else {
-        setVerificarRutMessage('La visita no es frecuente');
+        setVerificarRutMessage(t('visitas.isNotFrequentVisit'));
       }
     } catch (error) {
-      setVerificarRutMessage('Error: ' + error.message);
+      setVerificarRutMessage(`${t('visitas.error')}: ${error.message}`);
     }
   };
 
@@ -123,9 +126,9 @@ const Visitas = () => {
     <div>
       <Navbar />
       <div className="visitas-form-container">
-        <h1><center>Verificar si es visita frecuente</center></h1>
+        <h1><center>{t('visitas.verifyFrequentVisit')}</center></h1>
         <form className="visitas-form" onSubmit={handleSubmitVerificarFrecuente}>
-          <label htmlFor="verificarRut">Rut de la visita (sin punto ni guion):</label>
+          <label htmlFor="verificarRut">{t('visitas.rutPlaceholder')}</label>
           <input
             type="text"
             id="verificarRut"
@@ -134,36 +137,36 @@ const Visitas = () => {
             onChange={(e) => setVerificarRut(e.target.value)}
           />
           <p>{verificarRutMessage}</p>
-          <button type="submit">Submit</button>
+          <button type="submit">{t('visitas.submitButton')}</button>
         </form>
       </div>
 
       <VisitaFrecuenteForm />
 
       <div className="visitas-form-container">
-        <h1><center>Añadir visita no frecuente</center></h1>
+        <h1><center>{t('visitas.addNonFrequentVisit')}</center></h1>
         <form className="visitas-form" onSubmit={handleSubmitNoFrecuente}>
-          <label htmlFor="patenteNoFrecuente">Patente del vehículo:</label>
+          <label htmlFor="patenteNoFrecuente">{t('visitas.vehiclePlate')}</label>
           <input type="text" id="patenteNoFrecuente" name="patenteNoFrecuente" value={patenteNoFrecuente} onChange={(e) => setPatenteNoFrecuente(e.target.value)} />
           
-          <label htmlFor="departmentNoFrecuente">Departamento:</label>
+          <label htmlFor="departmentNoFrecuente">{t('visitas.selectDepartment')}</label>
           <select id="departmentNoFrecuente" value={selectedDepartmentNoFrecuente} onChange={handleDepartmentChangeNoFrecuente}>
-            <option value="">Seleccione un departamento</option>
+            <option value="">{t('visitas.selectDepartmentOption')}</option>
             {departments.map((dept) => (
               <option key={dept} value={dept}>{dept}</option>
             ))}
           </select>
 
-          <label htmlFor="rutNoFrecuente">Rut de la visita no frecuente (sin punto ni guion):</label>
+          <label htmlFor="rutNoFrecuente">{t('visitas.rutNoFrequentPlaceholder')}</label>
           <input type="text" id="rutNoFrecuente" name="rutNoFrecuente" value={rutNoFrecuente} onChange={(e) => setRutNoFrecuente(e.target.value)} />
 
-          <label htmlFor="nombreNoFrecuente">Nombre y apellido:</label>
+          <label htmlFor="nombreNoFrecuente">{t('visitas.namePlaceholder')}</label>
           <input type="text" id="nombreNoFrecuente" name="nombreNoFrecuente" value={nombreNoFrecuente} onChange={(e) => setNombreNoFrecuente(e.target.value)} />
 
-          <label htmlFor="fechaNacimientoNoFrecuente">Fecha de Nacimiento:</label>
+          <label htmlFor="fechaNacimientoNoFrecuente">{t('visitas.birthDatePlaceholder')}</label>
           <input type="date" id="fechaNacimientoNoFrecuente" name="fechaNacimientoNoFrecuente" value={fechaNacimientoNoFrecuente} onChange={(e) => setFechaNacimientoNoFrecuente(e.target.value)} />
 
-          <button type="submit">Submit</button>
+          <button type="submit">{t('visitas.submitButton')}</button>
         </form>
       </div>
     </div>

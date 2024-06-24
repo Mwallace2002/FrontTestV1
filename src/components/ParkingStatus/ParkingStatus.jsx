@@ -1,7 +1,9 @@
 import React from 'react';
 import './ParkingStatus.css';
+import { useTranslation } from 'react-i18next';
 
 const ParkingStatus = ({ freeSpots, onFreeSpot }) => {
+  const { t } = useTranslation("global");
   const totalSpots = 5; // Asumiendo que hay 5 estacionamientos
   const spots = Array.from({ length: totalSpots }, (_, i) => i + 1);
 
@@ -11,10 +13,10 @@ const ParkingStatus = ({ freeSpots, onFreeSpot }) => {
         const isFree = freeSpots.some(freeSpot => freeSpot.id === spot);
         return (
           <div key={spot} className={`parking-spot ${isFree ? 'free' : 'occupied'}`}>
-            Estacionamiento {spot}
+            {t('parkingStatus.parkingSpot')} {spot}
             {!isFree && (
               <button onClick={() => onFreeSpot(spot)} className="free-button">
-                Liberar Estacionamiento
+                {t('parkingStatus.freeButton')}
               </button>
             )}
           </div>
@@ -25,4 +27,5 @@ const ParkingStatus = ({ freeSpots, onFreeSpot }) => {
 };
 
 export default ParkingStatus;
+
 

@@ -77,3 +77,27 @@
     gap: 10px; 
     margin-bottom: 10px; 
 }
+.language-icons-container {
+    display: flex;
+    align-items: center;
+}
+
+.language-button {
+    margin-top: 10px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center; /* Align items vertically */
+}
+
+.language-button.selected {
+    border: 2px solid white; /* Highlight selected button */
+    border-radius: 5px; /* Rounded borders */
+}
+
+.language-icon {
+    width: 30px; /* Adjust icon size */
+    height: auto; /* Maintain aspect ratio */
+    margin-right: 5px; /* Adjust spacing between icon and button edge */
+}

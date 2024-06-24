@@ -6,5 +6,113 @@
         "Logged": "You are logged in",
         "Database": "Database",
         "Logout": "Logout"
+    },
+    "entryForm": {
+        "formTitle": "Entry Form",
+        "namePlaceholder": "Name",
+        "referencePlaceholder": "Reference",
+        "departmentPlaceholder": "Select Department",
+        "submitButton": "Submit",
+        "loading": "Submitting...",
+        "errorIncompleteFields": "Please fill in all fields.",
+        "errorRequest": "Request error",
+        "errorCreateEntry": "Error creating entry. Please try again.",
+        "errorNetwork": "Network error. Please try again."
+    },
+    "parkingStatus": {
+        "parkingSpot": "Parking Spot",
+        "freeButton": "Free Parking Spot"
+    },
+    "visitaFrecuenteForm": {
+        "addFrequentVisit": "Add Frequent Visit",
+        "vehicleLicensePlate": "Vehicle License Plate:",
+        "department": "Department:",
+        "selectDepartment": "Select a department",
+        "visitRut": "Visit's RUT (without dots or dashes):",
+        "name": "Name and Surname:",
+        "birthDate": "Birth Date:",
+        "submit": "Submit",
+        "errorAddFrequentVisit": "Error adding frequent visit",
+        "frequentVisitAdded": "Frequent visit added:",
+        "error": "Error:"
+    },
+    "vehiculos": {
+        "formTitle": "Vehicle Registration",
+        "namePlaceholder": "Vehicle",
+        "referencePlaceholder": "License Plate",
+        "departmentPlaceholder": "Select Department",
+        "submitButton": "Register",
+        "fetchFreeSpotsError": "Error fetching free parking spots.",
+        "fetchParamsError": "Error fetching time parameters.",
+        "fetchDeptNumberError": "Error fetching department number",
+        "whatsappURL": "WhatsApp URL:",
+        "noFreeSpots": "No parking spots available.",
+        "advertenciaMessage": "The vehicle {{nombre}} with license plate {{referencia}} has {{tiempoAdvertencia}} minutes left before the time expires.",
+        "dataSentToBackend": "Data sent to backend:",
+        "createVehicleError": "Error creating vehicle",
+        "registerVehicleError": "Error registering vehicle",
+        "vehicleRegistered": "The vehicle {{nombre}} with license plate {{referencia}} has been registered in parking spot {{estacionamiento}}.",
+        "dataSentToDelete": "Data sent for deletion:",
+        "freeSpotError": "Error freeing parking spot",
+        "spotFreed": "Parking spot {{id}} freed successfully.",
+        "scanQRCode": "Scan this QR Code to send the message via WhatsApp"
+    },
+    "visitas": {
+        "verifyFrequentVisit": "Verify if Frequent Visitor",
+        "rutPlaceholder": "Visitor's RUT (without dots or dashes):",
+        "submitButton": "Submit",
+        "addFrequentVisitError": "Error adding frequent visitor",
+        "frequentVisitAdded": "Frequent visitor added:",
+        "addNonFrequentVisitError": "Error adding non-frequent visitor",
+        "nonFrequentVisitAdded": "Non-frequent visitor added:",
+        "error": "Error",
+        "verifyFrequentVisitError": "Error verifying frequent visitor",
+        "isFrequentVisit": "The visit is frequent",
+        "isNotFrequentVisit": "The visit is not frequent",
+        "addNonFrequentVisit": "Add Non-Frequent Visitor",
+        "vehiclePlate": "Vehicle Plate:",
+        "selectDepartment": "Department:",
+        "selectDepartmentOption": "Select a department",
+        "rutNoFrequentPlaceholder": "Non-frequent visitor's RUT (without dots or dashes):",
+        "namePlaceholder": "Name and Surname:",
+        "birthDatePlaceholder": "Date of Birth:"
+    },
+    "navbar": {
+        "admin": "Admin",
+        "homeuser": "Home User",
+        "home": "Home",
+        "delivery": "Delivery",
+        "vehicles": "Vehicles",
+        "visits": "Visits"
+    },
+    "home": {
+        "entriesList": "Entries List",
+        "type": "Type",
+        "name": "Name",
+        "reference": "Reference (RUT / Plate / Package ID)",
+        "department": "Dept",
+        "schedule": "Schedule",
+        "errorFetchingEntries": "Error fetching entries. Please try again later.",
+        "formTitle": "Register New Entry",
+        "namePlaceholder": "Name",
+        "referencePlaceholder": "Reference",
+        "departmentPlaceholder": "Select a department",
+        "submitButton": "Register"
+    },
+    "delivery": {
+        "title": "Delivery",
+        "scanQR": "Scan this QR Code to send the message via WhatsApp",
+        "formTitle": "Register Delivery",
+        "namePlaceholder": "Recipient Name",
+        "referencePlaceholder": "ID of the package",
+        "departmentPlaceholder": "Select a department",
+        "submitButton": "Register"
+    },
+    "admin": {
+        "parametersConfig": "Parameters Configuration",
+        "stayTime": "Stay Time",
+        "warningTime": "Warning Time",
+        "updateParameters": "Update Parameters",
+        "updateError": "Error updating parameters"
     }
 }
