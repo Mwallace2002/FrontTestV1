@@ -5,6 +5,7 @@ import './Delivery.css';
 import EntryForm from '../../components/EntryForm/EntryForm.jsx';
 
 function DeliveryForm() {
+    const { t, i18n } = useTranslation('global');
     const [whatsappURL, setWhatsappURL] = useState('');
     const [messageSent, setMessageSent] = useState(false);
     const [departmentNumber, setDepartmentNumber] = useState('');
